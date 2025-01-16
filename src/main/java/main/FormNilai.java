@@ -177,6 +177,11 @@ public class FormNilai extends javax.swing.JPanel {
         btnTambah.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         btnTambah.setRoundedCorner(50);
         btnTambah.setStrokWidth(3);
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelC3Layout = new javax.swing.GroupLayout(panelC3);
         panelC3.setLayout(panelC3Layout);
@@ -317,6 +322,12 @@ public class FormNilai extends javax.swing.JPanel {
     private void textC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textC1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textC1ActionPerformed
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        FormTambahNilai menuNilai = new FormTambahNilai();
+        menuNilai.setVisible(true);
+        menuNilai.revalidate();
+    }//GEN-LAST:event_btnTambahActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

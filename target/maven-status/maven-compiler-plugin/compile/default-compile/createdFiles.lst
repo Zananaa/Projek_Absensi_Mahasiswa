@@ -11,9 +11,9 @@ main\FormHome.class
 main\FormRekap$2.class
 main\FormDataMhs$4.class
 customJar\TextPassC$PasswordFieldUI$Border.class
+main\FormTambahNilai$1.class
 main\FormRiwayatAbsensi.class
 main\FormNilai$1.class
-main\MenuUtama$7.class
 main\FormDataMhs.class
 main\FormRegistrasi$4.class
 main\FormHome$10.class
@@ -22,6 +22,7 @@ customJar\TextPassC$PasswordFieldUI$1.class
 main\FormRegistrasi.class
 main\FormRegistrasi$10.class
 main\FormRegistrasi$7.class
+main\FormTambahNilai.class
 customJar\PanelC.class
 main\FormLogin$3.class
 main\FormNilai$ButtonPanelEditor.class
@@ -60,7 +61,6 @@ main\FormHome$11.class
 main\FormRegistrasi$3.class
 main\FormLogin.class
 main\FormNilai$2.class
-main\MenuUtama$8.class
 customJar\TextPassC$PasswordFieldUI.class
 main\FormHome$1.class
 main\FormRegistrasi$6.class
@@ -82,8 +82,10 @@ main\FormAbsensi1$2.class
 main\FormRekap$1.class
 customJar\buttonRoundC3.class
 main\FormRekap$ButtonPanelEditor.class
+main\FormTambahNilai$2.class
 main\FormRekap$4.class
 customJar\TextC$TextFieldUI$Border.class
+main\FormNilai$4.class
 main\FormKelas$1.class
 customJar\buttonRoundC2.class
 main\FormLogin$4.class

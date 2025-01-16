@@ -53,15 +53,6 @@ public class MenuUtama extends javax.swing.JFrame {
         pn_line4 = new javax.swing.JPanel();
         lbl_Icon4 = new javax.swing.JLabel();
         lb_MenuNilai = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        pn_main5 = new javax.swing.JPanel();
-        pn_line5 = new javax.swing.JPanel();
-        lbl_Icon5 = new javax.swing.JLabel();
-        lb_MenuRekapN = new javax.swing.JLabel();
-        pn_main6 = new javax.swing.JPanel();
-        pn_line6 = new javax.swing.JPanel();
-        lbl_Icon6 = new javax.swing.JLabel();
-        lb_MenuRekapA = new javax.swing.JLabel();
         pn_content = new javax.swing.JPanel();
         pn_utama = new javax.swing.JPanel();
 
@@ -446,129 +437,6 @@ public class MenuUtama extends javax.swing.JFrame {
 
         pn_menu.add(pn_main4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 230, -1));
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 102, 153));
-        jLabel10.setText("Laporan");
-        pn_menu.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
-
-        pn_main5.setBackground(new java.awt.Color(198, 215, 231));
-
-        pn_line5.setBackground(new java.awt.Color(198, 215, 231));
-
-        javax.swing.GroupLayout pn_line5Layout = new javax.swing.GroupLayout(pn_line5);
-        pn_line5.setLayout(pn_line5Layout);
-        pn_line5Layout.setHorizontalGroup(
-            pn_line5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
-        );
-        pn_line5Layout.setVerticalGroup(
-            pn_line5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        lbl_Icon5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Icon5.setIcon(new javax.swing.ImageIcon("D:\\bahan_projek2\\src\\main\\java\\img\\notes-blck.png")); // NOI18N
-
-        lb_MenuRekapN.setBackground(new java.awt.Color(198, 215, 231));
-        lb_MenuRekapN.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        lb_MenuRekapN.setText("Rekap Nilai");
-        lb_MenuRekapN.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapNMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapNMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapNMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pn_main5Layout = new javax.swing.GroupLayout(pn_main5);
-        pn_main5.setLayout(pn_main5Layout);
-        pn_main5Layout.setHorizontalGroup(
-            pn_main5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pn_main5Layout.createSequentialGroup()
-                .addComponent(pn_line5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_Icon5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_MenuRekapN, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pn_main5Layout.setVerticalGroup(
-            pn_main5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_main5Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(pn_main5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lb_MenuRekapN, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pn_main5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pn_line5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_Icon5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(4, 4, 4))
-        );
-
-        pn_menu.add(pn_main5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 230, -1));
-
-        pn_main6.setBackground(new java.awt.Color(198, 215, 231));
-
-        pn_line6.setBackground(new java.awt.Color(198, 215, 231));
-
-        javax.swing.GroupLayout pn_line6Layout = new javax.swing.GroupLayout(pn_line6);
-        pn_line6.setLayout(pn_line6Layout);
-        pn_line6Layout.setHorizontalGroup(
-            pn_line6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
-        );
-        pn_line6Layout.setVerticalGroup(
-            pn_line6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        lbl_Icon6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Icon6.setIcon(new javax.swing.ImageIcon("D:\\bahan_projek2\\src\\main\\java\\img\\notes-white.png")); // NOI18N
-
-        lb_MenuRekapA.setBackground(new java.awt.Color(198, 215, 231));
-        lb_MenuRekapA.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        lb_MenuRekapA.setText("Rekap Absensi");
-        lb_MenuRekapA.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapAMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapAMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lb_MenuRekapAMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pn_main6Layout = new javax.swing.GroupLayout(pn_main6);
-        pn_main6.setLayout(pn_main6Layout);
-        pn_main6Layout.setHorizontalGroup(
-            pn_main6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pn_main6Layout.createSequentialGroup()
-                .addComponent(pn_line6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_Icon6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lb_MenuRekapA, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pn_main6Layout.setVerticalGroup(
-            pn_main6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_main6Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(pn_main6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lb_MenuRekapA, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pn_main6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pn_line6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_Icon6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(4, 4, 4))
-        );
-
-        pn_menu.add(pn_main6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 230, -1));
-
         jScrollPane1.setViewportView(pn_menu);
 
         javax.swing.GroupLayout pn_sidebarLayout = new javax.swing.GroupLayout(pn_sidebar);
@@ -705,46 +573,6 @@ public class MenuUtama extends javax.swing.JFrame {
         pn_line4.setBackground(new Color(198,215,231));
     }//GEN-LAST:event_lb_MenuNilaiMouseExited
 
-    private void lb_MenuRekapNMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapNMouseExited
-        pn_main5.setBackground(new Color(198,215,231));
-        pn_line5.setBackground(new Color(198,215,231));
-    }//GEN-LAST:event_lb_MenuRekapNMouseExited
-
-    private void lb_MenuRekapNMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapNMouseEntered
-        pn_main5.setBackground(new Color(250,250,250));
-        pn_line5.setBackground(new Color(34, 61, 156));
-    }//GEN-LAST:event_lb_MenuRekapNMouseEntered
-
-    private void lb_MenuRekapNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapNMouseClicked
-        pn_main5.setBackground(new Color(240,240,240));
-        pn_line5.setBackground(new Color(0, 102, 153));
-        
-        pn_utama.removeAll();
-        pn_utama.add(new FormNilai());
-        pn_utama.repaint();
-        pn_utama.revalidate();
-    }//GEN-LAST:event_lb_MenuRekapNMouseClicked
-
-    private void lb_MenuRekapAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapAMouseClicked
-        pn_main6.setBackground(new Color(240,240,240));
-        pn_line6.setBackground(new Color(0, 102, 153));
-        
-        pn_utama.removeAll();
-        pn_utama.add(new FormRekap());
-        pn_utama.repaint();
-        pn_utama.revalidate();
-    }//GEN-LAST:event_lb_MenuRekapAMouseClicked
-
-    private void lb_MenuRekapAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapAMouseEntered
-        pn_main6.setBackground(new Color(250,250,250));
-        pn_line6.setBackground(new Color(34, 61, 156));
-    }//GEN-LAST:event_lb_MenuRekapAMouseEntered
-
-    private void lb_MenuRekapAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuRekapAMouseExited
-        pn_main6.setBackground(new Color(198,215,231));
-        pn_line6.setBackground(new Color(198,215,231));
-    }//GEN-LAST:event_lb_MenuRekapAMouseExited
-
     public static void main(String args[]) {
         FlatLightLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -757,7 +585,6 @@ public class MenuUtama extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private customJar.buttonRoundC1 btnProfil;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -770,15 +597,11 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JLabel lb_MenuKelas;
     private javax.swing.JLabel lb_MenuMhs1;
     private javax.swing.JLabel lb_MenuNilai;
-    private javax.swing.JLabel lb_MenuRekapA;
-    private javax.swing.JLabel lb_MenuRekapN;
     private javax.swing.JLabel lbl_Icon;
     private javax.swing.JLabel lbl_Icon1;
     private javax.swing.JLabel lbl_Icon2;
     private javax.swing.JLabel lbl_Icon3;
     private javax.swing.JLabel lbl_Icon4;
-    private javax.swing.JLabel lbl_Icon5;
-    private javax.swing.JLabel lbl_Icon6;
     private javax.swing.JLabel lbl_logo;
     private javax.swing.JPanel pn_content;
     private javax.swing.JPanel pn_line;
@@ -786,15 +609,11 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JPanel pn_line2;
     private javax.swing.JPanel pn_line3;
     private javax.swing.JPanel pn_line4;
-    private javax.swing.JPanel pn_line5;
-    private javax.swing.JPanel pn_line6;
     private javax.swing.JPanel pn_main;
     private javax.swing.JPanel pn_main1;
     private javax.swing.JPanel pn_main2;
     private javax.swing.JPanel pn_main3;
     private javax.swing.JPanel pn_main4;
-    private javax.swing.JPanel pn_main5;
-    private javax.swing.JPanel pn_main6;
     private javax.swing.JPanel pn_menu;
     private javax.swing.JPanel pn_sidebar;
     private javax.swing.JPanel pn_utama;
