@@ -48,7 +48,7 @@ public class FormNilai extends JPanel {
           JButton deleteButton = new JButton(new FlatSVGIcon("svg/delete.svg"));
           deleteButton.setBackground(null); // Ubah warna latar belakang tombol delete
           deleteButton.setBackground(Color.red);
-          columnModel.getColumn(5).setCellEditor(new FormDataMhs.ButtonPanelEditor(editButton, deleteButton));
+          columnModel.getColumn(5).setCellEditor(new FormDataMhs.ButtonPanelEditor(custom1));
     }
     
     static class ButtonPanelRenderer extends JPanel implements TableCellRenderer{

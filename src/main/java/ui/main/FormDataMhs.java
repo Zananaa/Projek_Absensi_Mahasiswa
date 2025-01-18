@@ -3,25 +3,30 @@ package ui.main;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import dao.StudentDAO;
+import entities.Student;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-public class FormDataMhs extends JPanel {
+public class FormDataMhs extends javax.swing.JPanel{
 
     public FormDataMhs() {
         initComponents();
         setTableAction();
+        loadData();
         
         FlatLightLaf.setup();
         FlatSVGIcon tambahIcon = new FlatSVGIcon("svg/add.svg");
@@ -31,6 +36,26 @@ public class FormDataMhs extends JPanel {
         btnTambah.setIcon(tambahIcon);
         buttonPdf.setIcon(pdfIcon);
         buttonExel.setIcon(exelIcon);
+    }
+
+    private void loadData() {
+        StudentDAO studentDAO = new StudentDAO();
+        List<Student> students = studentDAO.getAllStudents();
+        DefaultTableModel model = (DefaultTableModel) custom1.getModel();
+        model.setRowCount(0);
+
+        for (Student student : students) {
+            Object[] row = {
+                student.getId(),
+                student.getNpm(),
+                student.getName(),
+                student.getPhone(),
+                student.getAcademicStatus(),
+                student.getRegistrationDate(),
+
+            };
+            model.addRow(row);
+        }
     }
    
     private void setTableAction() {
@@ -44,8 +69,9 @@ public class FormDataMhs extends JPanel {
           JButton deleteButton = new JButton(new FlatSVGIcon("svg/delete.svg"));
           deleteButton.setBackground(null); // Ubah warna latar belakang tombol delete
           deleteButton.setBackground(Color.red);
-          columnModel.getColumn(5).setCellEditor(new ButtonPanelEditor(editButton, deleteButton));
+          columnModel.getColumn(5).setCellEditor(new ButtonPanelEditor(custom1));
     }
+
 
     
     
@@ -91,12 +117,18 @@ public class FormDataMhs extends JPanel {
         JPanel  panel;
         JButton editButton;
         JButton deleButton;
+        JTable table;
 
-        public ButtonPanelEditor(JButton editButton, JButton deleButton){
-            this.editButton = editButton;
+        public ButtonPanelEditor(JTable table){
+            this.table = table;
+            this.editButton = new JButton(new FlatSVGIcon("svg/edit.svg"));
+            this.editButton.setBackground(Color.GREEN);
             this.editButton.addActionListener(this);
-            this.deleButton = deleButton;
+
+            this.deleButton =  new JButton(new FlatSVGIcon("svg/delete.svg"));
+            this.deleButton.setBackground(Color.red);
             this.deleButton.addActionListener(this);
+
             panel = new JPanel();
             
             javax.swing.GroupLayout layout = new  javax.swing.GroupLayout(panel);
@@ -134,8 +166,12 @@ public class FormDataMhs extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            int row = table.getSelectedRow();
+
              if(e.getSource() == editButton){
-                System.out.println("Edit Button berhasil");
+                Long studentId = (Long) table.getValueAt(row, 0);
+                FormEditMhs formEditMhs = new FormEditMhs(studentId);
+                formEditMhs.setVisible(true);
             } else if(e.getSource() == deleButton){
                 System.out.println("Delete Button berhasil");
             }

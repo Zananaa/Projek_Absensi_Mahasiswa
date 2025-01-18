@@ -13,8 +13,10 @@ import javax.swing.UIManager;
  * @author asus
  */
 public class FormEditMhs extends JFrame {
+    private Long studentId;
 
-    public FormEditMhs() {
+    public FormEditMhs(Long studentId) {
+        this.studentId = studentId;
         initComponents();
         
         UIManager.put( "CheckBox.arc", 0 );
@@ -183,7 +185,7 @@ public class FormEditMhs extends JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormEditMhs().setVisible(true);
+                new FormEditMhs(null).setVisible(true);
             }
         });
     }
