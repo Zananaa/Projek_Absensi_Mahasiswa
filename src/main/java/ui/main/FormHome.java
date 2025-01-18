@@ -4,18 +4,160 @@
  */
 package ui.main;
 
+import config.GlobalConfig;
+import dao.MahasiswaDAO;
+import utils.GradeUtils;
+import utils.NumberOnlyDocument;
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author asus
  */
 public class FormHome extends javax.swing.JPanel {
+    private MahasiswaDAO mahasiswaDAO;
 
     /**
      * Creates new form FormHome1
      */
     public FormHome() {
         initComponents();
+
+        mahasiswaDAO = new MahasiswaDAO();
+        //
+        loadDefaultConfig();
+        //addDocumentListeners();
+        displayTotalMahasiswa();
     }
+
+    private void displayTotalMahasiswa() {
+        int totalMahasiswa = mahasiswaDAO.getTotalMahasiswa();
+        jLabel2.setText("Total Mahasiswa: " + totalMahasiswa);
+    }
+
+    private void loadDefaultConfig() {
+        GlobalConfig config = GlobalConfig.getInstance();
+        textC16.setText(config.getConfig("defaultAbsen"));
+        textC46.setText(config.getConfig("defaultTugas"));
+        textC45.setText(config.getConfig("defaultUTS"));
+        textC47.setText(config.getConfig("defaultUAS"));
+
+        int[] rangeA = config.getGradeRange("A");
+        textC48.setText(String.valueOf(rangeA[0]));
+        textC24.setText(String.valueOf(rangeA[1]));
+
+
+
+        int[] rangeBPlus = config.getGradeRange("B+");
+        textC49.setText(String.valueOf(rangeBPlus[0]));
+        textC31.setText(String.valueOf(rangeBPlus[1]));
+
+
+
+        int[] rangeB = config.getGradeRange("B");
+        textC50.setText(String.valueOf(rangeB[0]));
+        textC38.setText(String.valueOf(rangeB[1]));
+
+
+
+        int[] rangeCPlus = config.getGradeRange("C+");
+        textC51.setText(String.valueOf(rangeCPlus[0]));
+        textC39.setText(String.valueOf(rangeCPlus[1]));
+
+
+
+
+        int[] rangeC = config.getGradeRange("C");
+        textC52.setText(String.valueOf(rangeC[0]));
+        textC40.setText(String.valueOf(rangeC[1]));
+
+
+
+
+        int[] rangeD = config.getGradeRange("D");
+        textC53.setText(String.valueOf(rangeD[0]));
+        textC41.setText(String.valueOf(rangeD[1]));
+
+
+        int[] rangeE = config.getGradeRange("E");
+        textC54.setText(String.valueOf(rangeE[0]));
+        textC42.setText(String.valueOf(rangeE[1]));
+
+    }
+
+    private void addDocumentListeners() {
+        addDocumentListener(textC16, "defaultAbsen");
+        addDocumentListener(textC46, "defaultTugas");
+        addDocumentListener(textC45, "defaultUTS");
+        addDocumentListener(textC47, "defaultUAS");
+
+        addGradeRangeListener(textC24, textC31, "A");
+        addGradeRangeListener(textC48, textC49, "B+");
+        addGradeRangeListener(textC38, textC39, "B");
+        addGradeRangeListener(textC40, textC41, "C+");
+        addGradeRangeListener(textC42, textC52, "C");
+        addGradeRangeListener(textC53, textC54, "D");
+        addGradeRangeListener(textC50, textC51, "E");
+    }
+    private void addGradeRangeListener(javax.swing.JTextField minField, javax.swing.JTextField maxField, String grade) {
+        minField.setDocument(new NumberOnlyDocument());
+        maxField.setDocument(new NumberOnlyDocument());
+
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                saveGradeRange(grade, minField, maxField);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                saveGradeRange(grade, minField, maxField);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                saveGradeRange(grade, minField, maxField);
+            }
+        };
+
+        minField.getDocument().addDocumentListener(listener);
+        maxField.getDocument().addDocumentListener(listener);
+    }
+
+    private void addDocumentListener(javax.swing.JTextField textField, String configKey) {
+        textField.setDocument(new NumberOnlyDocument());
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                saveConfig(configKey, textField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                saveConfig(configKey, textField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                saveConfig(configKey, textField.getText());
+            }
+        });
+    }
+
+    private void saveConfig(String key, String value) {
+        GlobalConfig config = GlobalConfig.getInstance();
+        config.setConfig(key, value);
+    }
+    private void saveGradeRange(String grade, javax.swing.JTextField minField, javax.swing.JTextField maxField) {
+        GlobalConfig config = GlobalConfig.getInstance();
+        int min = Integer.parseInt(minField.getText());
+        int max = Integer.parseInt(maxField.getText());
+        config.setGradeRange(grade, new int[]{min, max});
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

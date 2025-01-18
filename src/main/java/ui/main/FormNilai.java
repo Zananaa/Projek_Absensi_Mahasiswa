@@ -220,7 +220,7 @@ public class FormNilai extends JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Npm", "Nama", "Kelas", "Semester", "Action"
+                "No", "Npm", "Nama", "Harian", "Tugas", "UTS", "UAS", "Jumlah", "Predikat"
             }
         ) {
             boolean[] canEdit = new boolean [] {

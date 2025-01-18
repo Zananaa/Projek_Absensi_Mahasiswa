@@ -5,6 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,5 +106,21 @@ public class MahasiswaDAO {
             e.printStackTrace();
         }
         return mahasiswas;
+    }
+
+    public int getTotalMahasiswa() {
+        int total = 0;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            total = ((Long) session.createQuery("SELECT COUNT(m) FROM Mahasiswa m").uniqueResult()).intValue();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return total;
     }
 }
