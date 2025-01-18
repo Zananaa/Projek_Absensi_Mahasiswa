@@ -4,17 +4,42 @@
  */
 package ui.main;
 
+import entities.Absensi;
+import entities.Mahasiswa;
+import org.hibernate.Session;
+import utils.HibernateUtil;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author user
  */
 public class FormRiwayatAbsensi extends javax.swing.JFrame {
 
+    private Mahasiswa mahasiswa;
     /**
      * Creates new form FormRiwayatAbsensi
      */
-    public FormRiwayatAbsensi() {
+    public FormRiwayatAbsensi(Mahasiswa mahasiswa) {
+        this.mahasiswa = mahasiswa;
         initComponents();
+        loadRiwayatAbsensi();
+    }
+
+    private void loadRiwayatAbsensi() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Absensi> absensiList = session.createQuery("from Absensi where mahasiswa = :mahasiswa", Absensi.class)
+                    .setParameter("mahasiswa", mahasiswa)
+                    .list();
+            for (Absensi absensi : absensiList) {
+                model.addRow(new Object[]{absensi.getTanggal(), absensi.isHadir(), absensi.isIzin(), absensi.isSakit(), absensi.isAlpha()});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -41,7 +66,7 @@ public class FormRiwayatAbsensi extends javax.swing.JFrame {
         panelC1.setRoundTopRight(20);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
-        jLabel1.setText("Data Riwayat Absensi");
+        jLabel1.setText("Data Riwayat Absensi: " + mahasiswa.getNama());
 
         javax.swing.GroupLayout panelC1Layout = new javax.swing.GroupLayout(panelC1);
         panelC1.setLayout(panelC1Layout);
@@ -68,11 +93,11 @@ public class FormRiwayatAbsensi extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "No", "Check In", "Check Out", "Deskripsi"
+                    "Tanggal", "Hadir", "Izin", "Sakit", "Alpha"
             }
         ) {
             Class[] types = new Class [] {
-                String.class, String.class, String.class, String.class
+                    String.class, Boolean.class, Boolean.class, Boolean.class, Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -149,7 +174,7 @@ public class FormRiwayatAbsensi extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormRiwayatAbsensi().setVisible(true);
+                new FormRiwayatAbsensi(new Mahasiswa()).setVisible(true);
             }
         });
     }

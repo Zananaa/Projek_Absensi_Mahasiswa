@@ -3,19 +3,15 @@ package ui.main;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import dao.StudentDAO;
-import entities.Student;
+import dao.MahasiswaDAO;
+import entities.Mahasiswa;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.AbstractCellEditor;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.LayoutStyle;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -38,21 +34,36 @@ public class FormDataMhs extends javax.swing.JPanel{
         buttonExel.setIcon(exelIcon);
     }
 
+    public void refreshData() {
+        loadData();
+    }
+
+    public void searchMahasiswa(String keyword) {
+        DefaultTableModel model = (DefaultTableModel) custom1.getModel();
+        model.setRowCount(0); // Clear existing data
+
+        MahasiswaDAO mahasiswaDAO = new MahasiswaDAO();
+        List<Mahasiswa> mahasiswas = mahasiswaDAO.searchMahasiswas(keyword);
+
+        for (Mahasiswa mhs : mahasiswas) {
+            model.addRow(new Object[]{mhs.getId(), mhs.getNpm(), mhs.getNama(), mhs.getKelas(), mhs.getSemester()});
+        }
+    }
+
     private void loadData() {
-        StudentDAO studentDAO = new StudentDAO();
-        List<Student> students = studentDAO.getAllStudents();
+        MahasiswaDAO mahasiswaDAO = new MahasiswaDAO();
+        List<Mahasiswa> mahasiswaList = mahasiswaDAO.getAllMahasiswas();
         DefaultTableModel model = (DefaultTableModel) custom1.getModel();
         model.setRowCount(0);
 
-        for (Student student : students) {
+        for (Mahasiswa mahasiswa : mahasiswaList) {
             Object[] row = {
-                student.getId(),
-                student.getNpm(),
-                student.getName(),
-                student.getPhone(),
-                student.getAcademicStatus(),
-                student.getRegistrationDate(),
-
+                    mahasiswa.getId(),
+                    mahasiswa.getNpm(),
+                    mahasiswa.getNama(),
+                    mahasiswa.getKelas(),
+                    mahasiswa.getSemester(),
+                    new JButton(new FlatSVGIcon("svg/edit.svg")) // Tombol edit
             };
             model.addRow(row);
         }
@@ -170,10 +181,19 @@ public class FormDataMhs extends javax.swing.JPanel{
 
              if(e.getSource() == editButton){
                 Long studentId = (Long) table.getValueAt(row, 0);
-                FormEditMhs formEditMhs = new FormEditMhs(studentId);
+                MahasiswaDAO mahasiswaDAO = new MahasiswaDAO();
+                Mahasiswa mahasiswa = mahasiswaDAO.getMahasiswaById(studentId);
+
+                FormEditMhs formEditMhs = new FormEditMhs((FormDataMhs) table.getParent().getParent().getParent().getParent(), mahasiswa);
                 formEditMhs.setVisible(true);
             } else if(e.getSource() == deleButton){
-                System.out.println("Delete Button berhasil");
+                 int confirm = JOptionPane.showConfirmDialog(null, "Apakah kamu ingin menghapus data ini?", "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+                 if (confirm == JOptionPane.YES_OPTION) {
+                     Long studentId = (Long) table.getValueAt(row, 0);
+                     MahasiswaDAO mahasiswaDAO = new MahasiswaDAO();
+                     mahasiswaDAO.deleteMahasiswa(studentId);
+                     ((FormDataMhs) table.getParent().getParent().getParent().getParent()).refreshData();
+                 }
             }
             
             fireEditingStopped();
@@ -365,10 +385,12 @@ public class FormDataMhs extends javax.swing.JPanel{
 
     private void buttonCariActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buttonCariActionPerformed
         // TODO add your handling code here:
+        String keyword = textC1.getText();
+        searchMahasiswa(keyword);
     }//GEN-LAST:event_buttonCariActionPerformed
 
     private void btnTambahActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        FormTambahMhs menuTambah = new FormTambahMhs();
+        FormTambahMhs menuTambah = new FormTambahMhs(this);
         menuTambah.setVisible(true);
         menuTambah.revalidate();
         

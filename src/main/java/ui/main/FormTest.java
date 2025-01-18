@@ -21,8 +21,7 @@ public class FormTest {
             // Create a new Mahasiswa object
             Mahasiswa mahasiswa = new Mahasiswa();
             mahasiswa.setNama("Muhammad Rizki Fir");
-            mahasiswa.setNim("123456789");
-            mahasiswa.setJurusan("Informatika");
+
 
             // Save the Mahasiswa object
             session.save(mahasiswa);

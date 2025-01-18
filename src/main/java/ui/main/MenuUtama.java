@@ -4,14 +4,18 @@ package ui.main;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 
 public class MenuUtama extends JFrame {
+    private FormDataMhs formDataMhs;
 
     public MenuUtama() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
+        formDataMhs = new FormDataMhs();
+
         FlatSVGIcon pdfIcon = new FlatSVGIcon("svg/profil.svg");
         
         btnProfil.setIcon(pdfIcon);
@@ -575,6 +579,11 @@ public class MenuUtama extends JFrame {
         pn_line4.setBackground(new Color(198,215,231));
     }//GEN-LAST:event_lb_MenuNilaiMouseExited
 
+    private void btnTambahActionPerformed(ActionEvent evt) {
+        FormTambahMhs menuTambah = new FormTambahMhs(formDataMhs);
+        menuTambah.setVisible(true);
+        menuTambah.revalidate();
+    }
     public static void main(String args[]) {
         FlatLightLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {

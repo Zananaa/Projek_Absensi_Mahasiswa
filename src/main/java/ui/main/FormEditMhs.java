@@ -5,22 +5,75 @@
 package ui.main;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import dao.MahasiswaDAO;
+import entities.Mahasiswa;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author asus
  */
 public class FormEditMhs extends JFrame {
-    private Long studentId;
 
-    public FormEditMhs(Long studentId) {
-        this.studentId = studentId;
+    private FormDataMhs formDataMhs;
+    private Mahasiswa mahasiswa;
+
+    public FormEditMhs(FormDataMhs formDataMhs, Mahasiswa mahasiswa) {
+        this.formDataMhs = formDataMhs;
+        this.mahasiswa = mahasiswa;
         initComponents();
         
         UIManager.put( "CheckBox.arc", 0 );
         UIManager.put( "TextComponent.arc", 999 );
+
+        textNpm.setText(mahasiswa.getNpm());
+        TextNama.setText(mahasiswa.getNama());
+        textKelas.setText(mahasiswa.getKelas());
+        textSemester.setText(String.valueOf(mahasiswa.getSemester()));
+
+        buttonRoundC1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateMahasiswa();
+            }
+        });
+
+        buttonRoundC22.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
+
+    private void updateMahasiswa() {
+        try {
+            String npm = textNpm.getText();
+            String nama = TextNama.getText();
+            String kelas = textKelas.getText();
+            int semester = Integer.parseInt(textSemester.getText());
+
+            mahasiswa.setNpm(npm);
+            mahasiswa.setNama(nama);
+            mahasiswa.setKelas(kelas);
+            mahasiswa.setSemester(semester);
+
+            MahasiswaDAO mahasiswaDAO = new MahasiswaDAO();
+            mahasiswaDAO.updateMahasiswa(mahasiswa);
+
+            JOptionPane.showMessageDialog(this, "Data mahasiswa berhasil diperbarui.");
+
+            // Refresh data in FormDataMhs
+            formDataMhs.refreshData();
+
+            // Close the current form and navigate back to FormDataMhs
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+        }
     }
 
     private void Flatlaf(){
@@ -38,11 +91,12 @@ public class FormEditMhs extends JFrame {
         jLabelKelas = new javax.swing.JLabel();
         jLabelSemester = new javax.swing.JLabel();
         jLabelNama = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        cbKelas = new javax.swing.JComboBox<>();
         buttonRoundC1 = new ui.customJar.buttonRoundC();
         textNpm = new javax.swing.JTextField();
         TextNama = new javax.swing.JTextField();
+        textKelas = new javax.swing.JTextField();
+        textSemester = new javax.swing.JTextField();
+
         buttonRoundC22 = new ui.customJar.buttonRoundC2();
 
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -70,9 +124,6 @@ public class FormEditMhs extends JFrame {
         jLabelNama.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabelNama.setText("Nama :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbKelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         buttonRoundC1.setText("Simpan");
         buttonRoundC1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -118,8 +169,8 @@ public class FormEditMhs extends JFrame {
                                 .addComponent(jLabelSemester)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(panelC1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbKelas, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(textSemester, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textKelas, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(panelC1Layout.createSequentialGroup()
                         .addGap(255, 255, 255)
                         .addComponent(jLabel1)))
@@ -140,11 +191,11 @@ public class FormEditMhs extends JFrame {
                     .addComponent(TextNama, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(panelC1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbKelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textKelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelKelas))
                 .addGap(44, 44, 44)
                 .addGroup(panelC1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSemester))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(panelC1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,7 +236,7 @@ public class FormEditMhs extends JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormEditMhs(null).setVisible(true);
+                new FormEditMhs(new FormDataMhs(), new Mahasiswa()).setVisible(true);
             }
         });
     }
@@ -194,8 +245,6 @@ public class FormEditMhs extends JFrame {
     private javax.swing.JTextField TextNama;
     private ui.customJar.buttonRoundC buttonRoundC1;
     private ui.customJar.buttonRoundC2 buttonRoundC22;
-    private javax.swing.JComboBox<String> cbKelas;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelKelas;
     private javax.swing.JLabel jLabelNama;
@@ -204,5 +253,7 @@ public class FormEditMhs extends JFrame {
     private javax.swing.JPanel jPanel1;
     private ui.customJar.PanelC panelC1;
     private javax.swing.JTextField textNpm;
+    private javax.swing.JTextField textSemester;
+    private javax.swing.JTextField textKelas;
     // End of variables declaration//GEN-END:variables
 }

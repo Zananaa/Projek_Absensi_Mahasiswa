@@ -3,17 +3,26 @@ package ui.main;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import dao.AbsensiDAO;
+import entities.Absensi;
+import entities.Mahasiswa;
+import org.hibernate.Session;
+import utils.HibernateUtil;
+
+import javax.swing.*;
+import javax.swing.event.TableModelListener;
+
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.util.List;
 
 
 public class FormAbsensi1 extends javax.swing.JPanel {
-    
-    
+
+
+    private JTable custom2;
     
     public FormAbsensi1() {
         initComponents();
@@ -25,17 +34,101 @@ public class FormAbsensi1 extends javax.swing.JPanel {
         buttonPdf.setIcon(pdfIcon);
         buttonExel.setIcon(exelIcon);
         
-        
-       
-        
+        loadMahasiswaData();
     }
-    
-    
 
-   
+    private void loadMahasiswaData() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Mahasiswa> mahasiswaList = session.createQuery("from Mahasiswa", Mahasiswa.class).list();
+            DefaultTableModel model = (DefaultTableModel) custom1.getModel();
+            model.setRowCount(0); // Clear existing data
+            LocalDate today = LocalDate.now();
+            AbsensiDAO absensiDAO = new AbsensiDAO();
+
+            for (Mahasiswa mahasiswa : mahasiswaList) {
+                Absensi absensi = absensiDAO.getAbsensiByMahasiswaAndDate(mahasiswa, today.toString());
+                boolean hadir = absensi != null && absensi.isHadir();
+                boolean izin = absensi != null && absensi.isIzin();
+                boolean sakit = absensi != null && absensi.isSakit();
+                boolean alpha = absensi != null && absensi.isAlpha();
+                model.addRow(new Object[]{mahasiswa.getId(), mahasiswa.getNpm(), mahasiswa.getNama(), hadir, izin, sakit, alpha});
+            }
+
+            TableModelListener listener = e -> {
+                int row = e.getFirstRow();
+                int column = e.getColumn();
+                if (column >= 3 && column <= 6) {
+                    handleCheckboxSelection(row, column);
+                }
+            };
+            model.addTableModelListener(listener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleCheckboxSelection(int row, int column) {
+        DefaultTableModel model = (DefaultTableModel) custom1.getModel();
+        TableModelListener[] listeners = model.getTableModelListeners();
+        for (TableModelListener listener : listeners) {
+            model.removeTableModelListener(listener);
+        }
+
+        for (int i = 3; i <= 6; i++) {
+            if (i != column) {
+                model.setValueAt(false, row, i);
+            }
+        }
+
+        String npm = (String) model.getValueAt(row, 1);
+        boolean hadir = (Boolean) model.getValueAt(row, 3);
+        boolean izin = (Boolean) model.getValueAt(row, 4);
+        boolean sakit = (Boolean) model.getValueAt(row, 5);
+        boolean alpha = (Boolean) model.getValueAt(row, 6);
+
+        Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
+        if (mahasiswa != null) {
+            saveAbsensi(mahasiswa, hadir, izin, sakit, alpha);
+        }
+
+        for (TableModelListener listener : listeners) {
+            model.addTableModelListener(listener);
+        }
+    }
+
+    private Mahasiswa getMahasiswaByNpm(String npm) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Mahasiswa where npm = :npm", Mahasiswa.class)
+                    .setParameter("npm", npm)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void saveAbsensi(Mahasiswa mahasiswa, boolean hadir, boolean izin, boolean sakit, boolean alpha) {
+        AbsensiDAO absensiDAO = new AbsensiDAO();
+        LocalDate today = LocalDate.now();
+        Absensi absensi = new Absensi(mahasiswa, today.toString(), hadir, izin, sakit, alpha);
+        absensiDAO.saveOrUpdateAbsensi(absensi);
+    }
+
+
+    private void showRiwayatAbsensi(Mahasiswa mahasiswa) {
+        JFrame frame = new JFrame("Riwayat Absensi");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setContentPane(new FormRiwayatAbsensi(mahasiswa));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
 
         menuUtamaAbsn = new javax.swing.JPanel();
         panelC1 = new ui.customJar.PanelC();
@@ -57,6 +150,20 @@ public class FormAbsensi1 extends javax.swing.JPanel {
         panelC1.setRoundBottomRight(20);
         panelC1.setRoundTopLeft(20);
         panelC1.setRoundTopRight(20);
+
+        custom1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = custom1.getSelectedRow();
+                    String npm = (String) custom1.getValueAt(row, 1);
+                    Mahasiswa mahasiswa = getMahasiswaByNpm(npm);
+                    if (mahasiswa != null) {
+                        showRiwayatAbsensi(mahasiswa);
+                    }
+                }
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel1.setText("Data Absensi Mahasiswa");

@@ -24,6 +24,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Mention annotated class -->
-        <mapping class="entities.Student"/>
+        <mapping class="entities.Mahasiswa"/>
+        <mapping class="entities.Absensi"/>
     </session-factory>
 </hibernate-configuration>
